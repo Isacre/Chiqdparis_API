@@ -8,19 +8,20 @@ const router = express.Router();
 
 router.get("/products", async (req, res) => {
   try {
-    const products = await Product;
-    res.status(201).json(products);
+    const product = await Product.find();
+    res.status(200).json(product);
   } catch (err) {
     res.status(400).json("something went wrong");
     console.log(err);
   }
 });
-("");
+
 router.post("/new/product", async (req, res) => {
+  const product = await Product.find();
   const newProduct = new Product({
     title: req.body.title,
     price: req.body.price,
-    id: id,
+    id: product.length,
     image: req.body.image,
     description: req.body.description,
     category: req.body.category,
@@ -29,7 +30,7 @@ router.post("/new/product", async (req, res) => {
     const saveProduct = await newProduct.save();
     res.status(201).json(saveProduct);
   } catch (err) {
-    res.status(400).json("something went wrong");
+    res.status(400).json("No duplicates allowed");
     console.log(err);
   }
 });

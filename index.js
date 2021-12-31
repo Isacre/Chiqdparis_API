@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoute from "./routes/Auth.js";
+import ProductsRoute from "./routes/Product";
 import cors from "cors";
 
 dotenv.config();
@@ -23,3 +24,4 @@ app.get("/", (req, res) => res.send("<h1>hello mundo</h1>"));
 
 app.use(express.json());
 app.use("/", authRoute);
+app.use("/", ProductsRoute);

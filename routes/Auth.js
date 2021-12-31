@@ -18,17 +18,16 @@ router.post("/register", async (req, res) => {
     id: id,
     shoppingCart: [],
     purchases: [],
-    cep: req.body.cep,
     cpf: req.body.cpf,
   });
   try {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
-    res.status(400).json("Something went wrong");
+    res.status(400).json(err);
   }
 });
-
+("");
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });

@@ -1,5 +1,5 @@
 import express from "express";
-import Product from "../models/Product";
+import Product from "../models/Product.js";
 import { v4 as uuid_v4 } from "uuid";
 
 const id = uuid_v4();

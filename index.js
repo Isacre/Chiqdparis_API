@@ -17,5 +17,7 @@ app.listen(process.env.PORT || 5000, () => {
   console.log("Backend Server is Running");
 });
 
+app.get("/", (req, res) => res.send("<h1>hello mundo</h1>"));
+
 app.use(express.json());
 app.use("/", authRoute);

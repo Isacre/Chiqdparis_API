@@ -12,7 +12,7 @@ const Order = new mongoose.model(
     ],
     cpf: { type: String, required: true },
     adress: { type: String, required: true },
-    id: { type: Number, required: true, unique: true },
+    orderid: { type: Number, required: true, unique: true },
     status: { type: String, default: "pendente" },
   },
   { timestamps: true }

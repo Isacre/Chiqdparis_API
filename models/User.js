@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema(
     cpf: { type: String, required: true, unique: true },
     shoppingCart: { type: Array, default: [] },
     purchases: { type: Array, default: [] },
+    favourites: { type: Array, default: [] },
   },
   { timestamps: true }
 );

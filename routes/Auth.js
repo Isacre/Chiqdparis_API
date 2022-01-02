@@ -20,6 +20,7 @@ router.post("/register", async (req, res) => {
     shoppingCart: [],
     purchases: [],
     cpf: req.body.cpf,
+    favourites: [],
   });
   try {
     const savedUser = await newUser.save();

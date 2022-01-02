@@ -18,4 +18,4 @@ const Order = new mongoose.model(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Order", Order);
+export default mongoose.model("Order", Order);

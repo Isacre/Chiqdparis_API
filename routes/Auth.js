@@ -9,7 +9,8 @@ const id = uuid_v4();
 
 router.post("/register", async (req, res) => {
   const newUser = new User({
-    username: req.body.username,
+    firstname: req.body.username,
+    lastname: req.body.lastname,
     email: req.body.email,
     password: CryptoJS.AES.encrypt(
       req.body.password,

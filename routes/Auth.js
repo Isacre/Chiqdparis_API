@@ -1,11 +1,8 @@
 import express from "express";
 import User from "../models/User.js";
-import { v4 as uuid_v4 } from "uuid";
 import CryptoJS from "crypto-js";
 
 const router = express.Router();
-
-const id = uuid_v4();
 
 router.post("/register", async (req, res) => {
   const newUser = new User({
@@ -16,9 +13,6 @@ router.post("/register", async (req, res) => {
       req.body.password,
       process.env.SECRET_PASSWORD
     ).toString(),
-    id: id,
-    shoppingCart: [],
-    purchases: [],
     cpf: req.body.cpf,
     favourites: [],
   });
@@ -50,7 +44,7 @@ router.post("/login", async (req, res) => {
       isAdmin: user.isAdmin,
     });
 
-    const { cpf, password, _id, __v, ...others } = user._doc;
+    const { cpf, password, __v, ...others } = user._doc;
 
     res.status(200).json(others);
   } catch (err) {

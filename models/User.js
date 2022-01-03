@@ -7,10 +7,7 @@ const UserSchema = new mongoose.Schema(
     isAdmin: { type: Boolean, default: false },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    id: { type: String, required: true, unique: true },
     cpf: { type: String, required: true, unique: true },
-    shoppingCart: { type: Array, default: [] },
-    purchases: { type: Array, default: [] },
     favourites: { type: Array, default: [] },
   },
   { timestamps: true }

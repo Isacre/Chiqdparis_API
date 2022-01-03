@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const Order = new mongoose.model(
-  "Order",
   {
     products: [
       {
@@ -12,7 +11,6 @@ const Order = new mongoose.model(
     ],
     cpf: { type: String, required: true },
     adress: { type: String, required: true },
-    orderid: { type: Number, required: true, unique: true },
     status: { type: String, default: "pendente" },
   },
   { timestamps: true }

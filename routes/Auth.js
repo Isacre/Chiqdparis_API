@@ -45,12 +45,12 @@ router.post("/login", async (req, res) => {
     OriginalPassword !== req.body.password &&
       res.statusCode(400).json("Wrong password");
 
-    /*  const acessToken = jwt.sign()({
+    const acessToken = jwt.sign()({
       id: user._id,
       isAdmin: user.isAdmin,
     });
- */
-    const { cpf, password, email, _id, __v, ...others } = user._doc;
+
+    const { cpf, password, _id, __v, ...others } = user._doc;
 
     res.status(200).json(others);
   } catch (err) {

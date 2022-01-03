@@ -14,6 +14,7 @@ router.post("/register", async (req, res) => {
       process.env.SECRET_PASSWORD
     ).toString(),
     cpf: req.body.cpf,
+    isAdmin: false,
     favourites: [],
   });
   try {

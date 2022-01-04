@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const Order = new mongoose.model(
+const Order = new mongoose.Schema(
   {
     products: [
       {
-        product: { type: String, required: true },
+        productid: { type: Number, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true, default: 1 },
       },

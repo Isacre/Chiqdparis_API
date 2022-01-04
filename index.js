@@ -2,7 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoute from "./routes/Auth.js";
+import UserRoute from "./routes/User.js";
 import productsRoute from "./routes/Product.js";
+import OrdersRoute from "./routes/Order.js";
+import cartRoute from "./routes/Cart.js";
 import cors from "cors";
 
 dotenv.config();
@@ -23,5 +26,8 @@ app.listen(process.env.PORT || 5000, () => {
 app.get("/", (req, res) => res.send("<h1>hello mundo</h1>"));
 
 app.use(express.json());
-app.use("/", authRoute);
-app.use("/", productsRoute);
+app.use("/auth", authRoute);
+app.use("/products", productsRoute);
+app.use("/orders", OrdersRoute);
+app.use("/users", UserRoute);
+app.use("/cart", cartRoute);

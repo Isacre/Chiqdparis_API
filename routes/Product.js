@@ -1,43 +1,81 @@
 import express from "express";
 import Product from "../models/Product.js";
-import { v4 as uuid_v4 } from "uuid";
-
-const id = uuid_v4();
+import { verifyTokenAndAdmin, verifyTokenAndAuth } from "./verifyToken.js";
 
 const router = express.Router();
 
-router.get("/products", async (req, res) => {
+//GET ALL PRODUCTS W/Query
+router.get("/", async (req, res) => {
+  const qNew = req.query.new;
+  const qCategory = req.query.category;
+  const qName = req.query.name;
   try {
-    const product = await Product.find();
-    res.status(200).json(product);
+    let products;
+
+    if (qNew) {
+      products = await Product.find().sort({ createdAt: -1 }).limit(10);
+    } else if (qCategory) {
+      products = await Product.find({
+        categories: {
+          $in: [qCategory],
+        },
+      });
+    } else if (qName) {
+      products = await Product.find({ title: qName });
+    } else {
+      products = await Product.find();
+    }
+    res.status(200).json(products);
   } catch (err) {
-    res.status(400).json("something went wrong");
-    console.log(err);
+    res.status(400).json(err);
   }
 });
 
-router.post("/new/product", async (req, res) => {
-  const product = await Product.find();
-  const newProduct = new Product({
-    title: req.body.title,
-    price: req.body.price,
-    id: product.length,
-    image: req.body.image,
-    description: req.body.description,
-    category: req.body.category,
-    rating: [
-      {
-        rate: 0,
-        count: 0,
-      },
-    ],
-  });
+//GET SINGLE PRODUCT
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//Create New Product
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
+  const newProduct = new Product(req.body);
+
   try {
     const saveProduct = await newProduct.save();
-    res.status(201).json(saveProduct);
+    res.status(200).json(newProduct);
   } catch (err) {
-    res.status(400).json("No duplicates allowed");
-    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//UPDATE PRODUCT
+router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//DELETE
+router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json("Product Has been deleted");
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 

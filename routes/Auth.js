@@ -1,6 +1,8 @@
 import express from "express";
 import User from "../models/User.js";
 import CryptoJS from "crypto-js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 const router = express.Router();
 
@@ -40,16 +42,23 @@ router.post("/login", async (req, res) => {
     OriginalPassword !== req.body.password &&
       res.statusCode(400).json("Wrong password");
 
-    const acessToken = jwt.sign()({
-      id: user._id,
-      isAdmin: user.isAdmin,
-    });
+    const acessToken = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+      },
+      process.env.JWTPASS,
+      {
+        expiresIn: "3d",
+      }
+    );
 
     const { cpf, password, __v, ...others } = user._doc;
 
-    res.status(200).json(others);
+    res.status(200).json({ ...others, acessToken });
   } catch (err) {
     res.status(400).json("Something went wrong");
+    console.log(err);
   }
 });
 

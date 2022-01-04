@@ -12,6 +12,7 @@ const Order = new mongoose.Schema(
     cpf: { type: String, required: true },
     adress: { type: String, required: true },
     status: { type: String, default: "pendente" },
+    total: { type: Number, required: true },
   },
   { timestamps: true }
 );

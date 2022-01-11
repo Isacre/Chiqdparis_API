@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const Order = new mongoose.Schema(
   {
+    ownerid: { type: String, required: true, unique: true },
     products: [
       {
         productid: { type: Number, required: true },

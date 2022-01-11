@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/", verifyTokenAndAuth, async (req, res) => {
   try {
     const newOrder = await new Order({
+      ownerid: req.body.ownerid,
       products: [
         {
           productid: req.body.productid,

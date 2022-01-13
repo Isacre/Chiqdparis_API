@@ -17,7 +17,6 @@ router.post("/register", async (req, res) => {
     ).toString(),
     cpf: req.body.cpf,
     isAdmin: false,
-    favourites: [],
   });
   try {
     const savedUser = await newUser.save();
